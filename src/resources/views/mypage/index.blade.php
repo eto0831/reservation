@@ -39,7 +39,7 @@
                 </p>
                 <p>Number: {{ $reservation->guest_count }}人</p>
                 <div class="qr-code">
-                    {!! QrCode::size(150)->generate(url('/reservation/verify/' . $reservation->id)) !!}
+                    {!! QrCode::size(150)->generate(route('reservation.verify', $reservation->id)) !!}
                 </div>
             </div>
             @endforeach

@@ -49,6 +49,11 @@ class ReservationController extends Controller
         return redirect('/mypage');
     }
 
+    public function scan()
+{
+    return view('admin.scan');
+}
+
     public function verify($id)
     {
         $reservation = Reservation::find($id);
