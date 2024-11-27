@@ -1,0 +1,10 @@
+2024-11-27 05:34:50,108 INFO supervisord started with pid 1
+2024-11-27 05:34:51,110 INFO spawned: 'queue_00' with pid 9
+2024-11-27 05:34:51,111 INFO spawned: 'php-fpm' with pid 10
+2024-11-27 05:34:52,130 INFO success: queue_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-27 05:34:52,130 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-27 05:36:03,292 INFO exited: queue_00 (exit status 0; expected)
+2024-11-27 05:36:04,294 INFO spawned: 'queue_00' with pid 19
+2024-11-27 05:36:04,410 INFO exited: queue_00 (exit status 0; not expected)
+2024-11-27 05:36:05,414 INFO spawned: 'queue_00' with pid 26
+2024-11-27 05:36:06,416 INFO success: queue_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

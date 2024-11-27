@@ -3,22 +3,43 @@
 namespace App\Console\Commands;
 
 use App\Models\Reservation;
-use App\Mail\ReservationReminderMail;
+use App\Jobs\SendReminderEmailJob;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
 class SendDailyReminderEmails extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'emails:send-reminders';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Send reminder emails to users with reservations for today';
 
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
     public function handle()
     {
         $today = Carbon::now()->toDateString();
@@ -31,20 +52,11 @@ class SendDailyReminderEmails extends Command
         }
 
         foreach ($reservations as $reservation) {
-            try {
-                Log::info('SendDailyReminderEmails: Sending email for reservation ID ' . $reservation->id);
-
-                // 直接メールを送信
-                Mail::to($reservation->user->email)
-                    ->send(new ReservationReminderMail($reservation));
-
-                Log::info('SendDailyReminderEmails: Email sent successfully for reservation ID ' . $reservation->id);
-            } catch (\Exception $e) {
-                Log::error('SendDailyReminderEmails: Failed to send email for reservation ID ' . $reservation->id . '. Error: ' . $e->getMessage());
-            }
+            Log::info('SendDailyReminderEmails: Dispatching job for reservation ID ' . $reservation->id);
+            SendReminderEmailJob::dispatch($reservation);
         }
 
-        $this->info('Reminder emails sent successfully.');
+        $this->info('Reminder emails dispatched successfully.');
         Log::info('SendDailyReminderEmails: Command execution completed.');
     }
 }
