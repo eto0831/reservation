@@ -16,6 +16,10 @@ RUN useradd -m eto0831
 # cronをインストール
 RUN apt-get update && apt-get install -y cron
 
+# スケジュール用のエントリーポイントスクリプトを追加
+COPY scheduler.sh /usr/local/bin/scheduler.sh
+RUN chmod +x /usr/local/bin/scheduler.sh
+
 # スーパーバイザーをインストール
 RUN apt-get update && apt-get install -y supervisor
 
